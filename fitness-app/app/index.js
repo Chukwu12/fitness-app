@@ -1,24 +1,25 @@
-import { useState } from "react";
-import { 
-  View, 
-  Text, 
-  TextInput, 
-  TouchableOpacity, 
+import { useState, useRef, useEffect } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
   StyleSheet,
   Dimensions,
   KeyboardAvoidingView,
-  Platform
+  Platform,
+  Animated,
+  Image,
 } from "react-native";
 import { Video } from "expo-av";
 
 const { width } = Dimensions.get("window");
 
 export default function HomeScreen() {
-  const [isLogin, setIsLogin] = useState(true); // toggle between login/signup
+  const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // Animation value
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -31,19 +32,17 @@ export default function HomeScreen() {
 
   const handleSubmit = () => {
     if (isLogin) {
-      // handle login logic
       console.log("Logging in with:", email, password);
     } else {
-      // handle signup logic
       console.log("Signing up with:", email, password);
     }
   };
 
   return (
-        <View style={styles.container}>
+    <View style={styles.container}>
       {/* Background Video */}
       <Video
-        source={require("../assets/background/homebg.mp4")} // replace with your video file
+        source={require("../assets/background/homebg.mp4")}
         rate={1.0}
         volume={0}
         isMuted
@@ -56,89 +55,96 @@ export default function HomeScreen() {
       {/* Overlay */}
       <View style={styles.overlay} />
 
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.container}
+      >
+        {/* Logo (image or fallback text) */}
+        <View style={styles.header}>
+          <Image
+            source={require("../assets/logo.png")} // replace with your logo file
+            style={styles.logoImage}
+            resizeMode="contain"
+          />
+          <Text style={styles.tagline}>Your Expert Coach in Your Pocket</Text>
+        </View>
 
-    <KeyboardAvoidingView 
-      behavior={Platform.OS === "ios" ? "padding" : "height"} 
-      style={styles.container}
-    >
-      <View style={styles.header}>
-        <Text style={styles.logo}>🏋️‍♂️ Kristie Fitness App</Text>
-        <Text style={styles.tagline}>Your Expert Coach in Your Pocket</Text>
-      </View>
+        {/* Login / Signup toggle */}
+        <View style={styles.switchContainer}>
+          <TouchableOpacity
+            onPress={() => setIsLogin(true)}
+            style={[styles.switchBtn, isLogin && styles.activeBtn]}
+          >
+            <Text style={[styles.switchText, isLogin && styles.activeText]}>
+              Login
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => setIsLogin(false)}
+            style={[styles.switchBtn, !isLogin && styles.activeBtn]}
+          >
+            <Text style={[styles.switchText, !isLogin && styles.activeText]}>
+              Sign Up
+            </Text>
+          </TouchableOpacity>
+        </View>
 
-      <View style={styles.switchContainer}>
-        <TouchableOpacity onPress={() => setIsLogin(true)} style={[styles.switchBtn, isLogin && styles.activeBtn]}>
-          <Text style={[styles.switchText, isLogin && styles.activeText]}>Login</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => setIsLogin(false)} style={[styles.switchBtn, !isLogin && styles.activeBtn]}>
-          <Text style={[styles.switchText, !isLogin && styles.activeText]}>Sign Up</Text>
-        </TouchableOpacity>
-      </View>
+        {/* Animated Form */}
+        <Animated.View style={[styles.form, { opacity: fadeAnim }]}>
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            placeholderTextColor="#ccc"
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+            autoCapitalize="none"
+          />
 
-      <View style={styles.form}>
-        <TextInput
-          style={styles.input}
-          placeholder="Email"
-          placeholderTextColor="#aaa"
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-          autoCapitalize="none"
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          placeholderTextColor="#aaa"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-        />
-        <TouchableOpacity style={styles.submitBtn} onPress={handleSubmit}>
-          <Text style={styles.submitText}>{isLogin ? "Login" : "Sign Up"}</Text>
-        </TouchableOpacity>
-      </View>
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            placeholderTextColor="#ccc"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+          />
 
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>Effortless, medical-aware fitness at your fingertips</Text>
-      </View>
-    </KeyboardAvoidingView>
+          <TouchableOpacity style={styles.submitBtn} onPress={handleSubmit}>
+            <Text style={styles.submitText}>
+              {isLogin ? "Login" : "Sign Up"}
+            </Text>
+          </TouchableOpacity>
+
+          {/* Signup/Login redirect text */}
+          <Text style={styles.redirectText}>
+            {isLogin ? "Don’t have an account? " : "Already have an account? "}
+            <Text style={styles.redirectLink}>
+              {isLogin ? "Sign Up" : "Login"}
+            </Text>
+          </Text>
+        </Animated.View>
+
+        {/* Footer */}
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>
+            Effortless, medical-aware fitness at your fingertips
+          </Text>
+        </View>
+      </KeyboardAvoidingView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1,
-    justifyContent: "center"
-  },
-  video: {
-    ...StyleSheet.absoluteFillObject, // fills entire screen
-  },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(0,0,0,0.4)", // semi-transparent overlay
-  },
-  content: {
-    flex: 1,
-    justifyContent: "center",
-       alignItems: "center",
-    alignItems: "center",
-    padding: 20,
-  },
-  header: {
-    alignItems: "center",
-    marginBottom: 30,
-  },
-  logo: {
-    fontSize: 36,
-    fontWeight: "bold",
-    color: "#FFD700",
-    marginBottom: 10,
-  },
-  tagline: {
-    fontSize: 16,
-    color: "#fff",
-    textAlign: "center",
-  },
+  container: { flex: 1, justifyContent: "center" },
+  video: { ...StyleSheet.absoluteFillObject },
+  overlay: { ...StyleSheet.absoluteFillObject, backgroundColor: "rgba(0,0,0,0.4)" },
+
+  header: { alignItems: "center", marginBottom: 20 },
+  logoImage: { width: 120, height: 120, marginBottom: 10 },
+  tagline: { fontSize: 16, color: "#fff", textAlign: "center" },
+
   switchContainer: {
     flexDirection: "row",
     justifyContent: "center",
@@ -155,24 +161,44 @@ const styles = StyleSheet.create({
   activeBtn: { backgroundColor: "#FFD700" },
   switchText: { color: "#FFD700", fontWeight: "bold" },
   activeText: { color: "#000" },
+
   form: {
-    width: width * 0.8, // 80% of screen width
+    width: width * 0.8,
     alignSelf: "center",
+    backgroundColor: "rgba(255,255,255,0.08)",
+    padding: 20,
+    borderRadius: 12,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
+    elevation: 6,
   },
   input: {
-    backgroundColor: "rgba(255,255,255,0.1)",
+    backgroundColor: "rgba(255,255,255,0.15)",
     color: "#fff",
     padding: 15,
     borderRadius: 10,
     marginBottom: 15,
+    fontSize: 16,
   },
   submitBtn: {
     backgroundColor: "#FFD700",
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
+    marginTop: 5,
   },
   submitText: { color: "#000", fontWeight: "bold", fontSize: 16 },
-  footer: { alignItems: "center", marginTop: 20 },
-  footerText: { color: "#ccc", textAlign: "center" },
+
+  redirectText: {
+    marginTop: 15,
+    color: "#ccc",
+    textAlign: "center",
+    fontSize: 14,
+  },
+  redirectLink: { color: "#FFD700", fontWeight: "600" },
+
+  footer: { alignItems: "center", marginTop: 25 },
+  footerText: { color: "#ccc", textAlign: "center", fontSize: 13 },
 });
