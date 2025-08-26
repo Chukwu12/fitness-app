@@ -42,7 +42,7 @@ export default function HomeScreen() {
     <View style={styles.container}>
       {/* Background Video */}
       <Video
-        source={require("../assets/background/homebg.mp4")}
+        source={require("../assets/background/homebg1.mp4")}
         rate={1.0}
         volume={0}
         isMuted
@@ -59,10 +59,10 @@ export default function HomeScreen() {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.container}
       >
-        {/* Logo (image or fallback text) */}
+        {/* Logo */}
         <View style={styles.header}>
           <Image
-            source={require("../assets/logo.png")} // replace with your logo file
+            source={require("../assets/logo.png")} 
             style={styles.logoImage}
             resizeMode="contain"
           />
@@ -139,11 +139,12 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: "center" },
   video: { ...StyleSheet.absoluteFillObject },
-  overlay: { ...StyleSheet.absoluteFillObject, backgroundColor: "rgba(0,0,0,0.4)" },
+  overlay: { ...StyleSheet.absoluteFillObject, backgroundColor: "rgba(0,0,0,0.5)" },
 
-  header: { alignItems: "center", marginBottom: 20 },
-  logoImage: { width: 120, height: 120, marginBottom: 10 },
-  tagline: { fontSize: 16, color: "#fff", textAlign: "center" },
+  header: { alignItems: "center", marginBottom: 20, paddingHorizontal: 20, 
+    justifyContent: "center", },
+  logoImage: { width: 150, height: 150, marginBottom: 20 },
+  tagline: { fontSize: 25, color: "#fff", textAlign: "center", fontWeight: "bold",  marginBottom: 30,},
 
   switchContainer: {
     flexDirection: "row",
@@ -163,10 +164,12 @@ const styles = StyleSheet.create({
   activeText: { color: "#000" },
 
   form: {
-    width: width * 0.8,
+    width: "90%",
+     maxWidth: 800,
     alignSelf: "center",
     backgroundColor: "rgba(255,255,255,0.08)",
     padding: 20,
+    marginBottom: 30,
     borderRadius: 12,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
@@ -188,6 +191,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     marginTop: 5,
+     paddingVertical: 15,
+    borderRadius: 12,
+    alignItems: "center",
+    marginBottom: 15,
+    shadowColor: "#000",
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5,
   },
   submitText: { color: "#000", fontWeight: "bold", fontSize: 16 },
 
@@ -196,6 +207,7 @@ const styles = StyleSheet.create({
     color: "#ccc",
     textAlign: "center",
     fontSize: 14,
+    textDecorationLine: "underline",
   },
   redirectLink: { color: "#FFD700", fontWeight: "600" },
 
