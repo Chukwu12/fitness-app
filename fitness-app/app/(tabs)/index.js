@@ -1,10 +1,10 @@
 import { View, Text, StyleSheet } from "react-native";
 
-export default function ProfileScreen() {
+export default function HomeScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>👤 Profile</Text>
-      <Text style={styles.text}>View and edit your fitness profile here.</Text>
+      <Text style={styles.title}>🏋️ Welcome to Fitness App</Text>
+      <Text style={styles.text}>Track your workouts, nutrition, and progress!</Text>
     </View>
   );
 }
