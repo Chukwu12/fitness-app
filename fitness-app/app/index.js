@@ -11,6 +11,7 @@ import {
   Animated,
   Image,
 } from "react-native";
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { Video } from "expo-av";
 
 const { width } = Dimensions.get("window");
@@ -62,7 +63,7 @@ export default function HomeScreen() {
         {/* Logo */}
         <View style={styles.header}>
           <Image
-            source={require("../assets/logo.png")} 
+            source={require("../assets/images/logo.png")} 
             style={styles.logoImage}
             resizeMode="contain"
           />
@@ -137,14 +138,13 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center" },
+  container: { flex: 1, justifyContent: "center",  paddingHorizontal: wp(5), },
   video: { ...StyleSheet.absoluteFillObject },
   overlay: { ...StyleSheet.absoluteFillObject, backgroundColor: "rgba(0,0,0,0.5)" },
 
-  header: { alignItems: "center", marginBottom: 20, paddingHorizontal: 20, 
-    justifyContent: "center", },
-  logoImage: { width: 150, height: 150, marginBottom: 20 },
-  tagline: { fontSize: 25, color: "#fff", textAlign: "center", fontWeight: "bold",  marginBottom: 30,},
+  header: { alignItems: "center",  marginBottom: hp(3), },
+  logoImage: {width: wp(30),  height: hp(15),  marginBottom: hp(2),},
+  tagline: { fontSize: wp(3), color: "#fff", textAlign: "center", fontWeight: "bold",    marginBottom: hp(3),},
 
   switchContainer: {
     flexDirection: "row",
@@ -171,10 +171,7 @@ const styles = StyleSheet.create({
     padding: 20,
     marginBottom: 30,
     borderRadius: 12,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
+    boxShadow: '0 4px 6px rgba(0,0,0, 0.8)',
     elevation: 6,
   },
   input: {
@@ -195,9 +192,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: "center",
     marginBottom: 15,
-    shadowColor: "#000",
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
+    boxShadow: '4px rgba(0,0,0, 0.3)',
     elevation: 5,
   },
   submitText: { color: "#000", fontWeight: "bold", fontSize: 16 },
