@@ -11,7 +11,7 @@ import {
   Animated,
   Image,
 } from "react-native";
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { Video } from "expo-av";
 
 const { width } = Dimensions.get("window");
@@ -63,11 +63,12 @@ export default function HomeScreen() {
         {/* Logo */}
         <View style={styles.header}>
           <Image
-            source={require("../assets/images/logo.png")} 
+            source={require("../assets/images/logo.png")}
             style={styles.logoImage}
             resizeMode="contain"
           />
           <Text style={styles.tagline}>Your Expert Coach in Your Pocket</Text>
+
         </View>
 
         {/* Login / Signup toggle */}
@@ -138,13 +139,13 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center",  paddingHorizontal: wp(5), },
+  container: { flex: 1, justifyContent: "center", paddingHorizontal: wp(5), },
   video: { ...StyleSheet.absoluteFillObject },
   overlay: { ...StyleSheet.absoluteFillObject, backgroundColor: "rgba(0,0,0,0.5)" },
 
-  header: { alignItems: "center",  marginBottom: hp(3), },
-  logoImage: {width: wp(30),  height: hp(15),  marginBottom: hp(2),},
-  tagline: { fontSize: wp(3), color: "#fff", textAlign: "center", fontWeight: "bold",    marginBottom: hp(3),},
+  header: { alignItems: "center", marginBottom: hp(3), },
+  logoImage: { width: wp(30), height: hp(15), marginBottom: hp(2), },
+  tagline: { fontSize: wp(3), color: "#fff", textAlign: "center", fontWeight: "bold", marginBottom: hp(3), },
 
   switchContainer: {
     flexDirection: "row",
@@ -165,7 +166,7 @@ const styles = StyleSheet.create({
 
   form: {
     width: "90%",
-     maxWidth: 800,
+    maxWidth: 800,
     alignSelf: "center",
     backgroundColor: "rgba(255,255,255,0.08)",
     padding: 20,
@@ -188,7 +189,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     marginTop: 5,
-     paddingVertical: 15,
+    paddingVertical: 15,
     borderRadius: 12,
     alignItems: "center",
     marginBottom: 15,
