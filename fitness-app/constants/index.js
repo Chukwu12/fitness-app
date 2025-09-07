@@ -6,6 +6,20 @@ export const sliderImages = [
   require('../assets/images/workout5.jpg'),
 ];
 
+// constants/index.js
+export const formatExerciseData = (exercise) => {
+  return {
+    id: exercise.id,
+    name: exercise.name,
+    gif: exercise.gifUrl,
+    target: exercise.target,
+    equipment: exercise.equipment,
+    bodyPart: exercise.bodyPart,
+    instructions: exercise.instructions || "No instructions provided",
+  };
+};
+
+
 
 export const bodyParts = [
   {
