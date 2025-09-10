@@ -1,56 +1,46 @@
 import axios from "axios";
-import Constants from "expo-constants";
 
-// Access .env
-const RAPID_API_KEY = process.env. EXPO_PUBLIC_RAPID_API_KEY;
+const API_BASE = "https://exercisedb-api-git-main-chukwu12s-projects.vercel.app/api";
 
-const options = {
-  headers: {
-    "X-RapidAPI-Key": RAPID_API_KEY,
-    "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
-  },
-};
+/**
+ * Format raw exercise data from API
+ */
+const formatExercise = (ex) => ({
+  ...ex,
+  exerciseId: ex.exerciseId || ex.id,
+  gifUrl: ex.imageUrl || ex.gif || "https://via.placeholder.com/300",
+  target: ex.targetMuscles?.join(", ") || "N/A",
+  bodyPart: ex.bodyParts?.join(", ") || "N/A",
+  equipment: ex.equipments?.join(", ") || "N/A",
+  instructions: ex.instructions?.join("\n") || "No instructions available",
+});
 
-// Fetch all exercises (returns full objects with name, gifUrl, target, equipment, bodyPart)
 export const fetchAllExercises = async () => {
   try {
-    const response = await axios.get(
-      "https://exercisedb.p.rapidapi.com/exercises",
-      options
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching all exercises:", error);
+    const { data } = await axios.get(`${API_BASE}/exercises`);
+    return data.map(formatExercise);
+  } catch (err) {
+    console.error("Error fetching all exercises:", err);
     return [];
   }
 };
 
-// Fetch exercises by body part
 export const fetchExercisesByBodyPart = async (bodyPart) => {
   try {
-    const response = await axios.get(
-      `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart}`,
-      options
-    );
-    return response.data;
-  } catch (error) {
-    console.error(`Error fetching exercises for ${bodyPart}:`, error);
+    const { data } = await axios.get(`${API_BASE}/exercises/bodyPart/${bodyPart}`);
+    return data.map(formatExercise);
+  } catch (err) {
+    console.error(`Error fetching exercises for ${bodyPart}:`, err);
     return [];
   }
 };
 
-// Fetch a single exercise by ID
 export const fetchExerciseById = async (id) => {
   try {
-    const response = await axios.get(
-      "https://exercisedb.p.rapidapi.com/exercises",
-      options
-    );
-    // Filter the single exercise
-    const exercise = response.data.find((item) => item.id === id);
-    return exercise || null;
-  } catch (error) {
-    console.error("Error fetching exercise by ID:", error);
+    const { data } = await axios.get(`${API_BASE}/exercises/exercise/${id}`);
+    return formatExercise(data);
+  } catch (err) {
+    console.error("Error fetching exercise by ID:", err);
     return null;
   }
 };
