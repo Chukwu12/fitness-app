@@ -34,7 +34,7 @@ export default function Layout() {
         }}
       />
       <Tabs.Screen
-        name="profile"
+        name="profile/index"
         options={{
           title: "Profile",
           tabBarIcon: ({ color, size }) => (
@@ -52,7 +52,7 @@ export default function Layout() {
         }}
       />
       <Tabs.Screen
-        name="workouts/index"
+        name="workouts"
         options={{
           title: "Workouts",
           tabBarIcon: ({ color, size }) => (
